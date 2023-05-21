@@ -1,0 +1,46 @@
+CODE SEGMENT
+    ASSUME CS:CODE, DS:CODE
+
+    MOV AX,CODE
+    MOV DS,AX
+
+    MOV AL,3AH
+    CALL PUTAL
+    MOV AH,4CH
+    INT 21H
+
+PUTAL:
+    MOV BL,10H
+    MUL BL          ;AX=03F0H
+    MOV LEVEL2,AH   ; 상위 보존
+
+    MOV AH,0        ;AX = 00F0H
+    DIV BL          ;AL=0FH
+    MOV LEVEL1,AL   ;하위 보존
+
+    MOV DL,LEVEL2
+    CALL PUTHEX     ;PUTHEX호출
+
+    MOV DL,LEVEL1
+    CALL PUTHEX     ;PUTHEX호출
+    RET             ;RET
+
+PUTHEX:
+    CMP DL,0AH
+    JAE HEX
+
+    ADD DL,'0'
+    JMP PRINT
+
+HEX:
+    ADD DL,'A'-0AH
+
+PRINT:
+    MOV AH,2
+    INT 21H
+    RET
+
+LEVEL1 DB ?
+LEVEL2 DB ?
+CODE ENDS
+END
