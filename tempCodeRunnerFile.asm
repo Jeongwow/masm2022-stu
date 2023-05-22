@@ -1,14 +1,2 @@
-CODE SEGMENT
-    ASSUME CS:CODE
-
-    MOV AX,0
-    MOV CX,10
-    
-NEXT: 
-    ADD AX,CX
-    LOOP NEXT
-
-    MOV AH,4CH
-    INT 21H
-CODE ENDS
-END
+1
+    ; INT 21H

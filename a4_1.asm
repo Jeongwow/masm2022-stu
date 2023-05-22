@@ -1,0 +1,27 @@
+MAIN SEGMENT
+ASSUME CS:MAIN, DS:MAIN
+
+    MOV AX,CS
+    MOV DS,AX
+
+    MOV BX, OFFSET L1
+    
+    MOV DL,[BX]
+    MOV AH,2
+    INT 21H
+
+    MOV DL,[BX+1]
+    MOV AH,2
+    INT 21H
+
+    MOV DL,[BX+2]
+    MOV AH,2
+    INT 21H
+
+    MOV AH,4CH
+    INT 21H
+
+L1 DB 'ABC'
+
+MAIN ENDS
+END
