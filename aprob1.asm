@@ -12,10 +12,14 @@ INPUTC:
     MOV AH,1
     INT 21H
 
+    CMP AL,20H      ; 20H는 'space bar'입력임.
+    JE EXIT
+
     MOV INPUT,AL
 
     CMP INPUT,'A'
     JAE CHECKUPERZ
+
 NOUPPER:    ; 만약 대문자 확인했는데 대문자 아니다, 그럼 소문자인지 확인
     CMP INPUT,'a'
     JAE CHECKLOWZ
@@ -37,23 +41,21 @@ CHECKUPERZ:
 
 PRINTL:
     MOV AL,INPUT
-    MOV BL,'a'
+    MOV BL,'a'-1
     SUB AL,BL       ; 이러면 AL 에 16진수로 출력할 숫자 생김.
 
     MOV VAR,AL
     CALL CONVERT16TO10
     JMP INPUTC
-
 
 PRINTU:
     MOV AL,INPUT
-    MOV BL,'A'
+    MOV BL,'A'-1
     SUB AL,BL       ; 이러면 AL 에 16진수로 출력할 숫자 생김.
 
     MOV VAR,AL
     CALL CONVERT16TO10
     JMP INPUTC
-
 
 CONVERT16TO10:
     MOV AH,0
@@ -69,13 +71,25 @@ CONVERT16TO10:
     ADD DL,'0'
     MOV AH,2
     INT 21H
+
 NOPRINTZERO:
     MOV DL,LEVEL2
     ADD DL,'0'
     MOV AH,2
     INT 21H
+
+    ; 개행.
+    MOV AH,2
+    MOV DL,0DH
+    INT 21h
+    MOV DL,0AH
+    INT 21h
     RET
 
+
+EXIT:
+    MOV AH,4CH
+    INT 21H
 
     INPUT DB ?
     VAR DB ?
