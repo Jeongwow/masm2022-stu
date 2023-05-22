@@ -1,0 +1,39 @@
+CODE SEGMENT
+    ASSUME CS:CODE,  DS:DATA
+    ; VAR (16진수짜리 10진수 출력)  VAR에 있는 16진수를 10진수로 변환.
+    ; LEVEL1, LEVEL2 변수 필요.
+    MOV AX,DATA
+    MOV DS,AX
+
+    CALL CONVERT16TO10
+
+    MOV AH,4CH
+    INT 21H
+    
+CONVERT16TO10:
+    MOV AH,0
+    MOV AL,VAR
+    MOV BL, 0AH
+    DIV BL
+    
+    MOV LEVEL1,AL
+    MOV LEVEL2,AH
+    MOV DL,LEVEL1
+    ADD DL,'0'
+    MOV AH,2
+    INT 21H
+
+    MOV DL,LEVEL2
+    ADD DL,'0'
+    MOV AH,2
+    INT 21H
+    RET
+
+CODE ENDS
+
+DATA SEGMENT
+    VAR DB 4FH
+    LEVEL1 DB ?
+    LEVEL2 DB ?
+DATA ENDS
+END

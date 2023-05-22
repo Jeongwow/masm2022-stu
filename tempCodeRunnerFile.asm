@@ -1,2 +1,1 @@
-1
-    ; INT 21H
+JE NOPRINTZERO
