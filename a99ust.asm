@@ -63,10 +63,7 @@ LOOP2:
 
     LOOP LOOP2
 
-
-
     RET
-
 
 NEXTLINE:
     PUSH DX
