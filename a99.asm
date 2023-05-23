@@ -2,8 +2,6 @@
 CODE SEGMENT
     ASSUME CS:CODE, DS:CODE
 
-    MOV DX,20
-
     MOV AX,CODE
     MOV DS,AX
 
